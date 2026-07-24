@@ -19,27 +19,19 @@ pipeline {
         }
 
         stage('tests') {
-            steps {
-                parallel {
-                    stage('unit_test') {
-                        steps {
-                            sh 'yarn test'
-                        }
-                    }
-                    stage('E2E_test') {
-                        steps {
-                            sh 'yarn test:e2e'
-                        }
+            parallel {
+                stage('unit_test') {
+                    steps {
+                        sh 'yarn test'
                     }
                 }
-                post {
-                    always {
-                        junit '**/reports/**/*.xml'
+                stage('E2E_test') {
+                    steps {
+                        sh 'yarn test:e2e'
                     }
                 }
             }
         }
-
         
 
         stage('deploy') {
