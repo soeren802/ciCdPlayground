@@ -11,6 +11,12 @@ pipeline {
             }
         }
 
+        stage('unit_test') {
+            steps {
+                sh 'yarn test'
+            }
+        }
+
         stage('build') {
             steps {
                 sh 'yarn build'
