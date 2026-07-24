@@ -31,7 +31,7 @@ jobs:
     - name: Integration tests
       run: yarn test:e2e
     - name: Test Report
-      ses: dorny/test-reporter@v3
+      uses: dorny/test-reporter@v3
       if: ${{ !cancelled() }}       # run this step even if previous step failed
       with:
         name: JEST Tests            # Name of the check run which will be created
