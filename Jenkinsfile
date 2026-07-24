@@ -11,23 +11,27 @@ pipeline {
             }
         }
 
-        stage('unit_test') {
-            steps {
-                sh 'yarn test'
-            }
-        }
-
         stage('build') {
             steps {
                 sh 'yarn build'
             }
         }
 
-        stage('E2E_test') {
-            steps {
-                sh 'yarn test:e2e'
+        stage('tests') {
+            parallel {
+                stage('unit_test') {
+                    steps {
+                        sh 'yarn test'
+                    }
+                }
+                stage('E2E_test') {
+                    steps {
+                        sh 'yarn test:e2e'
+                    }
+                }
             }
         }
+        
 
         stage('deploy') {
             steps {
