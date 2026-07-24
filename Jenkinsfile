@@ -15,22 +15,31 @@ pipeline {
             steps {
                 sh 'yarn build'
             }
+            
         }
 
         stage('tests') {
-            parallel {
-                stage('unit_test') {
-                    steps {
-                        sh 'yarn test'
+            steps {
+                parallel {
+                    stage('unit_test') {
+                        steps {
+                            sh 'yarn test'
+                        }
+                    }
+                    stage('E2E_test') {
+                        steps {
+                            sh 'yarn test:e2e'
+                        }
                     }
                 }
-                stage('E2E_test') {
-                    steps {
-                        sh 'yarn test:e2e'
+                post {
+                    always {
+                        junit '**/reports/**/*.xml'
                     }
                 }
             }
         }
+
         
 
         stage('deploy') {
