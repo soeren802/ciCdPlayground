@@ -1,15 +1,18 @@
 name: CI
 
-on: 
-  push:
-  pull_request:
+on:
   workflow_dispatch:
-  
+    inputs:
+      version:
+        description: 'Version number to tag the release (e.g. 1.2.3)'
+        required: true
+        type: string
+
 permissions:
   checks: write
   pull-requests: write
   id-token: write
-  contents: read
+  contents: write
   pages: write
 
 jobs:
@@ -37,3 +40,7 @@ jobs:
         name: JEST Tests            # Name of the check run which will be created
         path: reports/jest-junit.xml    # Path to test results
         reporter: jest-junit        # Format of test results
+    - name: Tag commit with version
+      run: |
+        git tag v${{ inputs.version }}
+        git push origin v${{ inputs.version }}
