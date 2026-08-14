@@ -16,7 +16,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    #test
+
     steps:
     # Github actions have Node and Yarn already set-up by default
     # It is not clear which versions these are, 
